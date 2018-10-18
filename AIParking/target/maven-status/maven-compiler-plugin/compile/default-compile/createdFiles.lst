@@ -1,0 +1,13 @@
+com\xzy\pojo\mapping.class
+com\xzy\pojo\User.class
+com\xzy\service\ParkingService.class
+com\xzy\pojo\parking.class
+com\xzy\mapper\ParkingMapper.class
+com\xzy\utils\OpenIDUtils.class
+com\xzy\utils\TestUDP$myDatagramSocketReceive.class
+com\xzy\service\serviceImp\ParkingServiceImp.class
+com\xzy\utils\MyX509TrustManager.class
+com\xzy\utils\CommonUtil.class
+com\xzy\pojo\userHistory.class
+com\xzy\utils\TestUDP.class
+com\xzy\controller\ParkingController.class

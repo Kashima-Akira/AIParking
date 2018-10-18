@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzy.mapper.ParkingMapper">
+
+
+
+    <!--地图信息-->
+    <select id="selectMapping" resultType="com.xzy.pojo.mapping">
+        SELECT * FROM mapping ;
+    </select>
+
+    <update id="Bechoosen" parameterType="Integer">
+         update mapping set status=2 where id=#{id};
+    </update>
+
+    <update id="mappingUpdate" parameterType="map">
+            update mapping set status=#{status} where id=#{id};
+     </update>
+
+
+    <resultMap id="mapNameResult" type="map">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="descript" column="descript"/>
+    </resultMap>
+    <select id="mapNameReturn" parameterType="int" resultMap="mapNameResult">
+      SELECT name ,descript from mapping where id=#{map_id}
+    </select>
+
+    <resultMap id="UserHistoryResult" type="map">
+        <id column="id" property="id"/>
+        <result column="map_id" property="mapId"/>
+        <result column="prince" property="prince"/>
+        <result column="total_time" property="totalTime"/>
+        <association property="mapName" column="map_id" select="mapNameReturn"></association>
+    </resultMap>
+
+    <select id="UserHistory" parameterType="String" resultMap="UserHistoryResult">
+        SELECT * from user_history where user_id=#{uid}
+    </select>
+
+    <resultMap id="SearchResult" type="map">
+        <result column="name" property="name"/>
+    </resultMap>
+    <select id="SerachMapping" parameterType="String" resultMap="SearchResult">
+            select name from mapping where name like '%${value}%';
+    </select>
+
+    <insert id="UserInsert" parameterType="map">
+        INSERT into USER values('${openID}','${carId}','${userName}','${sex}');
+    </insert>
+
+    <select id="StopParking" resultType="Integer">
+          select status  from mapping where id=1;
+    </select>
+
+    <select id="openIdisnotRepeat" parameterType="String" resultType="String">
+        select open_id from USER where open_id=#{URL};
+    </select>
+
+    <update id="userUpdate" parameterType="map">
+        update USER set car_id=#{carId},user_name=#{userName},sex=#{sex} where open_id=#{openID}
+    </update>
+
+    <select id="ThreadStatus" parameterType="int" resultType="int">
+        select status from mapping where id=#{id}
+    </select>
+
+    <insert id="upDateHistoryStart" parameterType="map">
+      INSERT  INTO  user_history(id,user_id,start_time,map_id) VALUES(#{id},#{user_id},#{start_time},#{map_id})
+    </insert>
+
+    <update id="upDateHistoryEnd" parameterType="map">
+        UPDATE  user_history set end_time=#{endTime} ,pay_status=#{payStatus},price=#{price} WHERE id=#{id}
+    </update>
+
+
+</mapper>
